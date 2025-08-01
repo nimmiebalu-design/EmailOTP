@@ -1,0 +1,6 @@
+@EmailOTP_HostAddress = http://localhost:5130
+
+GET {{EmailOTP_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
