@@ -15,19 +15,19 @@ namespace EmailOTP.Controllers
             // Constructor logic can be added here if needed
             this._emailService = emailService;
         }
-        [HttpPost("send")]
+        [HttpPost("sendotp")]
         public async Task<IActionResult> generate_OTP_email([FromQuery] string email)
         {
             int result = await _emailService.generate_OTP_email(email);
             return result switch
             {
                 EmailStatusCodes.STATUS_EMAIL_OK => Ok(new { status = result, message = "OTP has been sent successfully." }),
-                EmailStatusCodes.STATUS_EMAIL_INVALID => BadRequest(new { status = result, message = "email address is invalid." }),
-                EmailStatusCodes.STATUS_EMAIL_FAIL => StatusCode(500, new { status = result, message = "email address does not exist or sending to the email has failed" }),
+                EmailStatusCodes.STATUS_EMAIL_INVALID => BadRequest(new { status = result, message = "Email address is invalid." }),
+                EmailStatusCodes.STATUS_EMAIL_FAIL => StatusCode(500, new { status = result, message = "Email address does not exist or sending to the email has failed" }),
                 _ => StatusCode(500, new { status = -1, message = "Unknown error." })
             };
         }
-        [HttpPost("verify")]
+        [HttpPost("verifyotp")]
         public IActionResult Check_OTP([FromQuery] string email, [FromQuery] string otp)
         {
             int result = _emailService.Check_OTP(email, otp);
